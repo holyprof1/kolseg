@@ -179,10 +179,10 @@ textarea {
   top: calc(100% + 18px);
   left: 50%;
   display: grid;
-  grid-template-columns: 1.05fr repeat(3, minmax(0, 220px));
-  gap: 14px;
-  width: min(980px, calc(100vw - 48px));
-  padding: 18px;
+  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
+  gap: 16px;
+  width: min(1040px, calc(100vw - 48px));
+  padding: 20px;
   border: 1px solid var(--line);
   border-radius: 30px;
   background:
@@ -207,7 +207,6 @@ textarea {
 .nav-dropdown-intro,
 .nav-dropdown-card {
   overflow: hidden;
-  min-height: 240px;
   border: 1px solid var(--line);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.04);
@@ -217,7 +216,9 @@ textarea {
   display: flex;
   flex-direction: column;
   justify-content: end;
+  gap: 12px;
   padding: 22px;
+  min-height: 100%;
   background:
     linear-gradient(180deg, rgba(216, 162, 77, 0.14), transparent 40%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
@@ -234,20 +235,37 @@ textarea {
   text-transform: uppercase;
 }
 
-.nav-dropdown-intro p:last-child {
+.nav-dropdown-intro p:last-of-type {
   margin: 0;
   color: var(--muted);
   line-height: 1.6;
 }
 
+.nav-dropdown-intro .text-link {
+  width: fit-content;
+}
+
+.nav-dropdown-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
 .nav-dropdown-card {
   position: relative;
+  min-height: 278px;
+  transition: transform var(--transition), border-color var(--transition);
 }
 
 .nav-dropdown-card img {
   height: 100%;
   object-fit: cover;
   filter: brightness(0.66);
+}
+
+.nav-dropdown-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216, 162, 77, 0.34);
 }
 
 .nav-dropdown-card span {
@@ -268,6 +286,33 @@ textarea {
   color: rgba(255, 255, 255, 0.74);
   font-style: normal;
   line-height: 1.45;
+}
+
+.nav-dropdown-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-dropdown-list a {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.nav-dropdown-list a:hover {
+  color: var(--text);
+  border-color: rgba(216, 162, 77, 0.28);
+  transform: translateX(4px);
 }
 
 .menu-toggle {
@@ -835,23 +880,24 @@ textarea {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.82fr);
   gap: 24px;
   align-items: end;
-  padding: 46px 0 38px;
+  padding: 32px 0 34px;
 }
 
 .hero-clean-copy {
-  padding: 28px 0 12px;
+  max-width: 760px;
+  padding: 18px 0 8px;
 }
 
 .hero-clean-copy h1 {
   margin: 0;
-  max-width: 11ch;
+  max-width: 10.8ch;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6vw, 5.6rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.85rem, 5.2vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
   text-transform: uppercase;
 }
 
@@ -917,19 +963,28 @@ textarea {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 18px;
+  grid-auto-flow: dense;
 }
 
 .category-card {
   position: relative;
   overflow: hidden;
   grid-column: span 4;
-  min-height: 300px;
+  min-height: 280px;
   border-radius: 30px;
   background: #0b0b0b;
 }
 
 .category-card-wide {
   grid-column: span 6;
+}
+
+.category-card-featured {
+  min-height: 340px;
+}
+
+.category-card-tall {
+  min-height: 340px;
 }
 
 .category-card img,
@@ -962,7 +1017,7 @@ textarea {
 
 .category-card-copy strong {
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: 1.7rem;
   line-height: 0.96;
   text-transform: uppercase;
 }
@@ -1484,19 +1539,33 @@ textarea {
 
   .nav-dropdown-panel {
     position: static;
-    display: grid;
+    display: none;
     grid-template-columns: 1fr;
     width: 100%;
     margin-top: 14px;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(12, 12, 12, 0.98);
     box-shadow: none;
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
+    pointer-events: none;
     transform: none;
+  }
+
+  .nav-dropdown.is-open .nav-dropdown-panel {
+    display: grid;
+    pointer-events: auto;
+  }
+
+  .nav-dropdown-rail,
+  .nav-dropdown-list {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-dropdown-card {
+    min-height: 220px;
   }
 
   .hero-grid,

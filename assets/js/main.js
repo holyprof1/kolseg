@@ -118,6 +118,91 @@ if (filterButtons.length && portfolioCards.length) {
   });
 }
 
+const videoCards = [...document.querySelectorAll(".video-card[data-video-provider][data-video-id]")];
+
+if (videoCards.length) {
+  const lightbox = document.createElement("div");
+  lightbox.className = "video-lightbox";
+  lightbox.setAttribute("aria-hidden", "true");
+  lightbox.innerHTML = `
+    <div class="video-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="video-lightbox-close" type="button" aria-label="Close video">Close</button>
+      <div class="video-lightbox-frame"></div>
+    </div>
+  `;
+
+  const frame = lightbox.querySelector(".video-lightbox-frame");
+  const closeButton = lightbox.querySelector(".video-lightbox-close");
+  let lastTrigger = null;
+
+  const getEmbedUrl = (provider, id) => {
+    if (provider === "youtube") {
+      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    }
+
+    if (provider === "vimeo") {
+      return `https://player.vimeo.com/video/${id}?autoplay=1`;
+    }
+
+    return "";
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (frame) {
+      frame.innerHTML = "";
+    }
+    if (lastTrigger instanceof HTMLElement) {
+      lastTrigger.focus();
+    }
+  };
+
+  const openLightbox = (card) => {
+    const provider = card.dataset.videoProvider;
+    const id = card.dataset.videoId;
+    const src = getEmbedUrl(provider, id);
+    if (!src || !frame) {
+      return;
+    }
+
+    lastTrigger = card;
+    frame.innerHTML = `<iframe src="${src}" title="KOLSEG video player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    if (closeButton instanceof HTMLElement) {
+      closeButton.focus();
+    }
+  };
+
+  videoCards.forEach((card) => {
+    card.addEventListener("click", (event) => {
+      event.preventDefault();
+      openLightbox(card);
+    });
+  });
+
+  if (closeButton) {
+    closeButton.addEventListener("click", closeLightbox);
+  }
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+      closeLightbox();
+    }
+  });
+
+  document.body.appendChild(lightbox);
+}
+
 const contactForm = document.querySelector(".contact-form");
 if (contactForm) {
   contactForm.addEventListener("submit", (event) => {

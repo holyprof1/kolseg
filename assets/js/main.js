@@ -15,6 +15,9 @@ if (menuToggle && nav) {
 
   nav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
+      if (link.classList.contains("nav-dropdown-link") && window.innerWidth <= 980) {
+        return;
+      }
       nav.classList.remove("is-open");
       menuToggle.setAttribute("aria-expanded", "false");
     });
@@ -64,6 +67,7 @@ document.querySelectorAll(".site-nav a").forEach((link) => {
     (page === "home" && href === "index.html") ||
     (page === "services" && href === "services.html") ||
     (page === "portfolio" && href === "portfolio.html") ||
+    (page === "top-projects" && href === "portfolio.html") ||
     (page === "about" && href === "about.html") ||
     (page === "contact" && href === "contact.html")
   ) {

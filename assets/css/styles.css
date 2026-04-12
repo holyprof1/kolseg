@@ -206,7 +206,7 @@ textarea {
   visibility: hidden;
   pointer-events: none;
   z-index: 40;
-  transform: translateX(-58%) translateY(12px);
+  transform: translateX(-64%) translateY(12px);
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
 
@@ -215,7 +215,7 @@ textarea {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-58%) translateY(0);
+  transform: translateX(-64%) translateY(0);
 }
 
 .nav-dropdown-intro,
@@ -950,7 +950,7 @@ textarea {
 
 .hero-stack-card.large {
   grid-column: span 2;
-  min-height: 390px;
+  min-height: 330px;
 }
 
 .hero-stack-card img {

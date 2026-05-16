@@ -97,9 +97,12 @@ function kolseg_get_service_nav_items() {
     return array(
         'service-photography-videography' => 'Photography / Videography',
         'service-podcast' => 'Podcast',
+        'service-agency' => 'Agency',
         'service-sound-pa' => 'Sound / PA',
         'service-lighting' => 'Electrical & Lighting',
+        'service-music-audio' => 'Music Recording / Audio Production',
         'service-design-space' => 'Design / Interior / Fabrication',
+        'service-event-support' => 'Event & Entertainment Services',
         'service-contracts-renting' => 'Contracts / Renting',
     );
 }

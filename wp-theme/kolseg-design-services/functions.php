@@ -65,13 +65,32 @@ function kolseg_get_asset_version($relative_path) {
 }
 
 function kolseg_get_page_key() {
-    if (!empty($GLOBALS['kolseg_requested_seed_slug'])) {
-        $requested_slug = (string) $GLOBALS['kolseg_requested_seed_slug'];
-        if (0 === strpos($requested_slug, 'service-')) {
+    $resolved_slug = kolseg_get_resolved_seed_slug();
+    if (!empty($resolved_slug)) {
+        if (0 === strpos($resolved_slug, 'service-')) {
             return 'services';
         }
 
-        return $requested_slug;
+        return $resolved_slug;
+    }
+
+    $post = get_queried_object();
+    if ($post instanceof WP_Post && 0 === strpos($post->post_name, 'service-')) {
+        return 'services';
+    }
+
+    if ($post instanceof WP_Post) {
+        return $post->post_name;
+    }
+
+    return '';
+}
+
+function kolseg_get_resolved_seed_slug() {
+    $candidates = array();
+
+    if (!empty($GLOBALS['kolseg_requested_seed_slug'])) {
+        $candidates[] = (string) $GLOBALS['kolseg_requested_seed_slug'];
     }
 
     if (is_front_page()) {
@@ -79,15 +98,27 @@ function kolseg_get_page_key() {
     }
 
     $post = get_queried_object();
-    if (!($post instanceof WP_Post)) {
-        return '';
+    if ($post instanceof WP_Post && !empty($post->post_name)) {
+        $candidates[] = $post->post_name;
     }
 
-    if (0 === strpos($post->post_name, 'service-')) {
-        return 'services';
+    $requested_slug = kolseg_get_requested_slug();
+    if (!empty($requested_slug)) {
+        $candidates[] = $requested_slug;
     }
 
-    return $post->post_name;
+    foreach ($candidates as $candidate) {
+        $normalized_slug = kolseg_normalize_seed_slug($candidate);
+        if (!empty(kolseg_get_seed_config_by_slug($normalized_slug))) {
+            return $normalized_slug;
+        }
+    }
+
+    if (!empty($candidates)) {
+        return kolseg_normalize_seed_slug((string) $candidates[0]);
+    }
+
+    return '';
 }
 
 function kolseg_is_seeded_page($post_id = 0) {
@@ -130,21 +161,30 @@ function kolseg_render_page_content() {
 }
 
 function kolseg_get_content_slug() {
-    if (!empty($GLOBALS['kolseg_requested_seed_slug'])) {
-        return (string) $GLOBALS['kolseg_requested_seed_slug'];
-    }
-
-    if (is_front_page()) {
-        return 'home';
-    }
-
-    $post = get_queried_object();
-    if ($post instanceof WP_Post) {
-        return $post->post_name;
+    $resolved_slug = kolseg_get_resolved_seed_slug();
+    if (!empty($resolved_slug)) {
+        return $resolved_slug;
     }
 
     return '';
 }
+
+function kolseg_get_seed_document_title($title) {
+    $content_slug = kolseg_get_resolved_seed_slug();
+    $seed_config = kolseg_get_seed_config_by_slug($content_slug);
+    if (empty($seed_config)) {
+        return $title;
+    }
+
+    $site_name = get_bloginfo('name');
+    if ('home' === $content_slug) {
+        return $site_name;
+    }
+
+    $page_title = !empty($seed_config['title']) ? $seed_config['title'] : ucfirst(str_replace('-', ' ', $content_slug));
+    return $page_title . ' - ' . $site_name;
+}
+add_filter('pre_get_document_title', 'kolseg_get_seed_document_title', 20);
 
 function kolseg_seeded_content_is_malformed($content) {
     if (empty($content)) {
@@ -241,18 +281,44 @@ function kolseg_get_requested_slug() {
 }
 
 function kolseg_render_seeded_request_fallback($requested_slug) {
-    $fallback_content = kolseg_get_seed_source_content($requested_slug);
+    $resolved_slug = kolseg_normalize_seed_slug($requested_slug);
+    $fallback_content = kolseg_get_seed_source_content($resolved_slug);
     if (empty($fallback_content)) {
         return;
     }
 
-    $GLOBALS['kolseg_requested_seed_slug'] = $requested_slug;
+    $GLOBALS['kolseg_requested_seed_slug'] = $resolved_slug;
 
-    global $wp_query;
+    global $post, $wp_query;
+    $page = get_page_by_path($resolved_slug, OBJECT, 'page');
+    if (!($page instanceof WP_Post) && $resolved_slug !== $requested_slug) {
+        $page = get_page_by_path($requested_slug, OBJECT, 'page');
+    }
+
     if ($wp_query instanceof WP_Query) {
         $wp_query->is_404 = false;
         $wp_query->is_page = true;
         $wp_query->is_singular = true;
+        $wp_query->is_single = false;
+        $wp_query->is_archive = false;
+        $wp_query->is_home = false;
+        $wp_query->is_front_page = ('home' === $resolved_slug);
+        $wp_query->is_posts_page = false;
+
+        if ($page instanceof WP_Post) {
+            $wp_query->post = $page;
+            $wp_query->posts = array($page);
+            $wp_query->post_count = 1;
+            $wp_query->found_posts = 1;
+            $wp_query->max_num_pages = 1;
+            $wp_query->queried_object = $page;
+            $wp_query->queried_object_id = (int) $page->ID;
+        }
+    }
+
+    if ($page instanceof WP_Post) {
+        $post = $page;
+        setup_postdata($post);
     }
 
     status_header(200);
@@ -271,19 +337,19 @@ function kolseg_recover_missing_seed_page_request() {
         return;
     }
 
-    $requested_slug = kolseg_get_requested_slug();
+    $requested_slug = kolseg_normalize_seed_slug(kolseg_get_requested_slug());
     if (empty($requested_slug) || 'home' === $requested_slug || !kolseg_get_seed_config_by_slug($requested_slug)) {
         return;
     }
 
     $queried_object = get_queried_object();
-    if ($queried_object instanceof WP_Post && 'page' === $queried_object->post_type && $requested_slug === $queried_object->post_name) {
+    if ($queried_object instanceof WP_Post && 'page' === $queried_object->post_type && $requested_slug === kolseg_normalize_seed_slug($queried_object->post_name)) {
         return;
     }
 
     kolseg_import_source_pages(false);
     $page = get_page_by_path($requested_slug, OBJECT, 'page');
-    if ($page instanceof WP_Post && 'publish' === $page->post_status && is_page($requested_slug)) {
+    if ($page instanceof WP_Post && 'publish' === $page->post_status && !is_404()) {
         return;
     }
 

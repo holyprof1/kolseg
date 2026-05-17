@@ -84,7 +84,38 @@ function kolseg_get_seed_page_map() {
     );
 }
 
+function kolseg_get_seed_slug_aliases() {
+    return array(
+        'main-studio' => 'home',
+        'what-we-do' => 'services',
+        'about-us' => 'about',
+        'contact-us' => 'contact',
+        'sound-pa' => 'service-sound-pa',
+        'electrical-lighting' => 'service-lighting',
+        'electrical-lighting-services' => 'service-lighting',
+        'music-recording-audio-production' => 'service-music-audio',
+        'event-entertainment-services' => 'service-event-support',
+        'general-contracts-merchandise' => 'service-contracts-renting',
+        'design-interior-stage-sets-fabrication' => 'service-design-space',
+    );
+}
+
+function kolseg_normalize_seed_slug($slug) {
+    $slug = trim((string) $slug);
+    if ('' === $slug) {
+        return '';
+    }
+
+    $aliases = kolseg_get_seed_slug_aliases();
+    if (isset($aliases[$slug])) {
+        return $aliases[$slug];
+    }
+
+    return $slug;
+}
+
 function kolseg_get_seed_config_by_slug($slug) {
+    $slug = kolseg_normalize_seed_slug($slug);
     $page_map = kolseg_get_seed_page_map();
     if (isset($page_map[$slug])) {
         return $page_map[$slug];

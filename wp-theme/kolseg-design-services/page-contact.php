@@ -1,7 +1,15 @@
 <?php get_header(); ?>
 <main>
+  <?php
+  $kolseg_seed_slug = kolseg_get_content_slug();
+  $kolseg_seed_config = kolseg_get_seed_config_by_slug($kolseg_seed_slug);
+  if (empty($kolseg_seed_config)) {
+      $kolseg_seed_slug = kolseg_normalize_seed_slug(kolseg_get_requested_slug());
+      $kolseg_seed_config = kolseg_get_seed_config_by_slug($kolseg_seed_slug);
+  }
+  ?>
   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-    <?php if (kolseg_get_seed_config_by_slug(kolseg_get_content_slug())) : ?>
+    <?php if ($kolseg_seed_config) : ?>
       <?php kolseg_render_page_content(); ?>
     <?php elseif (trim((string) get_the_content())) : ?>
       <?php the_content(); ?>
@@ -32,7 +40,7 @@
     <?php endif; ?>
   <?php endwhile; else : ?>
     <?php
-    $requested_slug = kolseg_get_requested_slug();
+    $requested_slug = kolseg_normalize_seed_slug(kolseg_get_requested_slug());
     $fallback_content = kolseg_get_seed_source_content($requested_slug);
     if (!empty($fallback_content)) :
     ?>

@@ -145,6 +145,31 @@ const revealObserver = new IntersectionObserver(
 
 revealItems.forEach((item) => revealObserver.observe(item));
 
+const marqueeTracks = document.querySelectorAll(".media-marquee-track");
+marqueeTracks.forEach((track) => {
+  const marquee = track.closest(".media-marquee");
+  if (!marquee || track.dataset.enhanced === "true") {
+    return;
+  }
+
+  const cards = [...track.children];
+  if (!cards.length) {
+    return;
+  }
+
+  cards.forEach((card) => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("a, button").forEach((node) => {
+      node.setAttribute("tabindex", "-1");
+    });
+    track.appendChild(clone);
+  });
+
+  track.dataset.enhanced = "true";
+  marquee.classList.add("is-ready");
+});
+
 const filterButtons = document.querySelectorAll("[data-filter]");
 const portfolioCards = document.querySelectorAll(".portfolio-card");
 

@@ -11,15 +11,15 @@ function kolseg_get_theme_image_catalog() {
             'images' => array(
                 'kolseg_nav_media_image' => array(
                     'label' => __('Services Menu Media Preview', 'kolseg-design-services'),
-                    'fallback' => 'services-drive/service-photo-cover.jpg',
+                    'fallback' => 'drive-extended/photo-hanna-main.jpg',
                 ),
                 'kolseg_nav_production_image' => array(
                     'label' => __('Services Menu Production Preview', 'kolseg-design-services'),
-                    'fallback' => 'services-drive/service-audio-main.jpg',
+                    'fallback' => 'drive-extended/audio-session-2.jpg',
                 ),
                 'kolseg_nav_build_image' => array(
                     'label' => __('Services Menu Build Preview', 'kolseg-design-services'),
-                    'fallback' => 'services-drive/service-design-main.jpg',
+                    'fallback' => 'drive-extended/event-aso-3.jpg',
                 ),
             ),
         ),
@@ -43,6 +43,34 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Hero Lighting Card', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-lighting-main.jpg',
                 ),
+                'kolseg_home_photo_portrait_image' => array(
+                    'label' => __('Homepage Portrait Feature', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-main.jpg',
+                ),
+                'kolseg_home_photo_editorial_image' => array(
+                    'label' => __('Homepage Editorial Feature', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-alt.jpg',
+                ),
+                'kolseg_home_video_vimeo_image' => array(
+                    'label' => __('Homepage Featured Video Card 1', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-retouched-fashion.jpg',
+                ),
+                'kolseg_home_video_youtube_image' => array(
+                    'label' => __('Homepage Featured Video Card 2', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/audio-session-2.jpg',
+                ),
+                'kolseg_home_projects_showcase_image' => array(
+                    'label' => __('Homepage Project Showcase 1', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-3.jpg',
+                ),
+                'kolseg_home_projects_showcase_alt_image' => array(
+                    'label' => __('Homepage Project Showcase 2', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-5.jpg',
+                ),
+                'kolseg_home_projects_showcase_detail_image' => array(
+                    'label' => __('Homepage Project Showcase 3', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/lighting-show-a.jpg',
+                ),
             ),
         ),
         'kolseg_service_images' => array(
@@ -65,6 +93,18 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Photography Cover', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-photo-cover.jpg',
                 ),
+                'kolseg_photo_gallery_campaign_image' => array(
+                    'label' => __('Photography Campaign Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-bimbo-3.jpg',
+                ),
+                'kolseg_photo_gallery_editorial_image' => array(
+                    'label' => __('Photography Editorial Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-agency-main.jpg',
+                ),
+                'kolseg_photo_gallery_brand_image' => array(
+                    'label' => __('Photography Brand Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-retouched-fashion.jpg',
+                ),
                 'kolseg_podcast_primary_image' => array(
                     'label' => __('Podcast Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-podcast-main.jpg',
@@ -73,9 +113,25 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Podcast Secondary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-podcast-alt-1.jpg',
                 ),
+                'kolseg_podcast_gallery_set_image' => array(
+                    'label' => __('Podcast Studio Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/podcast-setup-6.jpg',
+                ),
+                'kolseg_podcast_gallery_stage_image' => array(
+                    'label' => __('Podcast Set Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-podcast-alt-2.jpg',
+                ),
                 'kolseg_agency_primary_image' => array(
                     'label' => __('Agency / Brand Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-brand-building.jpg',
+                ),
+                'kolseg_agency_gallery_portrait_image' => array(
+                    'label' => __('Agency Portrait Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-main.jpg',
+                ),
+                'kolseg_agency_gallery_rollout_image' => array(
+                    'label' => __('Agency Rollout Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-5.jpg',
                 ),
                 'kolseg_sound_primary_image' => array(
                     'label' => __('Sound / PA Primary', 'kolseg-design-services'),
@@ -85,6 +141,14 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Sound / PA Secondary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-sound-alt-2.jpg',
                 ),
+                'kolseg_sound_gallery_session_image' => array(
+                    'label' => __('Sound Session Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/audio-session-2.jpg',
+                ),
+                'kolseg_sound_gallery_console_image' => array(
+                    'label' => __('Sound Console Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-sound-alt-1.jpg',
+                ),
                 'kolseg_lighting_primary_image' => array(
                     'label' => __('Lighting Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-lighting-main.jpg',
@@ -93,6 +157,14 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Lighting Secondary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-lighting-alt-1.jpg',
                 ),
+                'kolseg_lighting_gallery_stage_image' => array(
+                    'label' => __('Lighting Stage Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-lighting-alt-2.jpg',
+                ),
+                'kolseg_lighting_gallery_nightlife_image' => array(
+                    'label' => __('Lighting Nightlife Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/design-escape-lagos.jpg',
+                ),
                 'kolseg_audio_primary_image' => array(
                     'label' => __('Audio Production Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-audio-main.jpg',
@@ -100,6 +172,14 @@ function kolseg_get_theme_image_catalog() {
                 'kolseg_audio_secondary_image' => array(
                     'label' => __('Audio Production Secondary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-audio-alt-1.jpg',
+                ),
+                'kolseg_audio_gallery_room_image' => array(
+                    'label' => __('Audio Room Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/audio-session-2.jpg',
+                ),
+                'kolseg_audio_gallery_content_image' => array(
+                    'label' => __('Audio For Content Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-retouched-fashion.jpg',
                 ),
                 'kolseg_design_primary_image' => array(
                     'label' => __('Design / Fabrication Primary', 'kolseg-design-services'),
@@ -113,6 +193,14 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Design / Fabrication Detail', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-design-alt-2.jpg',
                 ),
+                'kolseg_design_gallery_interior_image' => array(
+                    'label' => __('Design Interior Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/interior-cf83.jpg',
+                ),
+                'kolseg_design_gallery_finish_image' => array(
+                    'label' => __('Design Finish Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-events-alt-2.jpg',
+                ),
                 'kolseg_events_primary_image' => array(
                     'label' => __('Events Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-events-main.jpg',
@@ -125,13 +213,37 @@ function kolseg_get_theme_image_catalog() {
                     'label' => __('Events Detail', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-events-alt-2.jpg',
                 ),
+                'kolseg_events_gallery_rollout_image' => array(
+                    'label' => __('Events Rollout Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-3.jpg',
+                ),
+                'kolseg_events_gallery_nightlife_image' => array(
+                    'label' => __('Events Nightlife Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/design-escape-lagos.jpg',
+                ),
                 'kolseg_contracts_primary_image' => array(
                     'label' => __('Contracts / Rentals Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-contracts-main.jpg',
                 ),
+                'kolseg_contracts_gallery_rental_image' => array(
+                    'label' => __('Contracts Rental Detail', 'kolseg-design-services'),
+                    'fallback' => 'services-drive/service-renting-main.jpg',
+                ),
+                'kolseg_contracts_gallery_facility_image' => array(
+                    'label' => __('Contracts Facility Detail', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/podcast-setup-6.jpg',
+                ),
                 'kolseg_technical_primary_image' => array(
                     'label' => __('Technical Support Primary', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-technical-main.jpg',
+                ),
+                'kolseg_portfolio_video_vimeo_image' => array(
+                    'label' => __('Portfolio Media Promo 1', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-bimbo-3.jpg',
+                ),
+                'kolseg_portfolio_video_youtube_image' => array(
+                    'label' => __('Portfolio Media Promo 2', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-5.jpg',
                 ),
             ),
         ),
@@ -146,6 +258,38 @@ function kolseg_get_theme_image_catalog() {
                 'kolseg_contact_cta_image' => array(
                     'label' => __('Contact CTA Background', 'kolseg-design-services'),
                     'fallback' => 'services-drive/service-photo-cover.jpg',
+                ),
+                'kolseg_about_video_vimeo_image' => array(
+                    'label' => __('About Media Card 1', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-alt.jpg',
+                ),
+                'kolseg_about_video_youtube_image' => array(
+                    'label' => __('About Media Card 2', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-3.jpg',
+                ),
+                'kolseg_contact_support_image' => array(
+                    'label' => __('Contact Support Image', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-main.jpg',
+                ),
+                'kolseg_contact_support_secondary_image' => array(
+                    'label' => __('Contact Support Secondary Image', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/podcast-setup-6.jpg',
+                ),
+                'kolseg_top_projects_hero_image' => array(
+                    'label' => __('Top Projects Hero Image', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-5.jpg',
+                ),
+                'kolseg_top_projects_showcase_primary' => array(
+                    'label' => __('Top Projects Showcase 1', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/event-aso-3.jpg',
+                ),
+                'kolseg_top_projects_showcase_secondary' => array(
+                    'label' => __('Top Projects Showcase 2', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/audio-session-2.jpg',
+                ),
+                'kolseg_top_projects_showcase_tertiary' => array(
+                    'label' => __('Top Projects Showcase 3', 'kolseg-design-services'),
+                    'fallback' => 'drive-extended/photo-hanna-alt.jpg',
                 ),
             ),
         ),
